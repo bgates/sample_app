@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.7'
+#  gem 'sqlite3', '1.3.7' # ex 3.3
   gem 'rspec-rails', '2.13.1'
 end
 
@@ -30,9 +30,9 @@ group :doc do
   gem 'sdoc', '0.3.20', require: false
 end
 
-group :production do
+#group :production do
   gem 'pg', '0.15.1'
-end
+#end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
