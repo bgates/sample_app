@@ -17,6 +17,7 @@ group :test do
 end
 
 gem 'rails', '4.0.0.rc2'
+gem 'bootstrap-sass', '2.3.1.0'
 
 gem 'sass-rails', '4.0.0.rc2'
 
