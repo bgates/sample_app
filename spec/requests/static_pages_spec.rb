@@ -16,7 +16,6 @@ describe "Static pages" do
 
     it { should have_content('Help') }
     it { should have_title(full_title "Help") }
-    it { should_not have_title("Hlp") }
   end
 
   describe "About page" do
