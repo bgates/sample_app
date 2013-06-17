@@ -17,12 +17,8 @@ describe "UserPages" do
     let(:submit) { 'Create my account' }
 
     describe "with valid information" do
-      before do
-        fill_in "Name", with: "Example User"
-        fill_in "Email", with: "user@example.com"
-        fill_in "Password", with: "foobar"
-        fill_in "Confirmation", with: "foobar"
-      end
+
+      before { enter_valid_signup_info }
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
@@ -32,13 +28,12 @@ describe "UserPages" do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
-        it { should have_link("Sign out") }
-        it { should have_title(user.name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { should show_logged_in(user) }
+        it { should have_success_message('Welcome') }
 
         describe "followed by signout" do
           before { click_link "Sign out" }
-          it { should have_link("Sign in") }
+          it { should have_signin_link }
         end
       end
     end
@@ -52,7 +47,7 @@ describe "UserPages" do
         before { click_button submit }
 
         it { should have_title(full_title 'Sign Up') }
-        it { should have_selector('#error_explanation') }
+        it { should show_errors }
       end
     end
   end
