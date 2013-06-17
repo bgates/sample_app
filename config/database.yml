@@ -11,6 +11,9 @@ development:
   <<: *default
   database: hartl_sample_app_development 
 
-test:
+test: &test
   <<: *default
   database: hartl_sample_app_test 
+
+cucumber:
+  <<: *test
