@@ -5,12 +5,16 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
   has_secure_password 
 
-  before_save :downcase_email 
+  before_save :downcase_email, :set_remember_token
 
 
   private
 
     def downcase_email
       self.email.downcase! 
+    end
+
+    def set_remember_token
+      self.remember_token = SecureRandom.urlsafe_base64
     end
 end
