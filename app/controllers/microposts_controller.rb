@@ -9,7 +9,7 @@ class MicropostsController < ApplicationController
       redirect_to root_url, flash: { success: 'Micropost created!'}
     else
       @feed_items = []
-      render 'static_pages/home'
+      render 'static_pages/logged_in_home'
     end
   end
 
