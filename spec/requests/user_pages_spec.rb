@@ -10,6 +10,24 @@ describe "UserPages" do
       it { should have_content('Sign up') }
       it { should have_title(full_title 'Sign Up') }
     end
+
+    describe "if user has already signed in" do
+      let(:user) { FactoryGirl.create :user }
+      before do
+        valid_signin(user)
+      end
+      
+      it "should get bounced from the signup page" do
+        visit signup_path
+        expect(page).not_to have_content('Create my account')
+      end
+
+      it "should not make a POST to Users#create" do
+        expect do
+          post users_path, user: FactoryGirl.attributes_for(:user)
+        end.not_to change(User, :count)
+      end
+    end
   end
 
   describe "signing up" do
@@ -70,7 +88,7 @@ describe "UserPages" do
     describe "page" do
       it { should have_content('Update your profile') }
       it { should have_title('Edit user') }
-      it { should have_link("change", href: 'http://gravatar.com/emails') }
+      it { should have_link("change", href: 'http://gravatar.com/email') }
     end
 
     describe "with invalid information" do
@@ -96,6 +114,16 @@ describe "UserPages" do
       it { should have_signout_link }
       specify { expect(user.reload.name).to eq new_name }
       specify { expect(user.reload.email).to eq new_email }
+    end
+
+    describe "forbidden attributes" do
+      let(:params) do
+        { user: { 
+            admin: true, password: user.password, 
+            password_confirmation: user.password }}
+      end
+      before { patch user_path(user), params }
+      specify { expect(user.reload).not_to be_admin }
     end
   end
 
